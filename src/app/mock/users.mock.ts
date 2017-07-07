@@ -1,25 +1,24 @@
 import { IUser } from '../interfaces/user.interface';
+import { CounterActionTypes } from '../actions/counter.actions';
 
 export const USERS: IUser[] = [
   {
     username: 'john89',
-    permissions: {
-      canIncrease: true,
-      canDecrease: false
-    }
+    permissions: [
+      { type: CounterActionTypes.INCREASE }
+    ]
   },
   {
     username: 'adam777',
-    permissions: {
-      canIncrease: false,
-      canDecrease: true
-    }
+    permissions: [
+      { type: CounterActionTypes.DECREASE }
+    ]
   },
   {
     username: 'kate18',
-    permissions: {
-      canIncrease: true,
-      canDecrease: true
-    }
+    permissions: [
+      { type: CounterActionTypes.INCREASE },
+      { type: CounterActionTypes.DECREASE }
+    ]
   }
 ];

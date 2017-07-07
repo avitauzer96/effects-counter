@@ -3,24 +3,27 @@ import { IUser } from '../interfaces/user.interface';
 import 'rxjs/add/operator/catch';
 
 export class CounterActionTypes {
-  static readonly REQUEST_INCREASE: string = '[Counter] Request Increase';
-  static readonly REQUEST_DECREASE: string = '[Counter] Request Decrease';
+  static readonly TRY_ACCESS: string = '[Counter] Try Access';
   static readonly INCREASE: string = '[Counter] Increase';
   static readonly DECREASE: string = '[Counter] Decrease';
-  static readonly INCREASE_NOT_ALLOWED: string = '[Counter] Increase Not Allowed';
-  static readonly DECREASE_NOT_ALLOWED: string = '[Counter] Decrease Not Allowed';
+  static readonly ACTION_NOT_ALLOWED: string = '[Counter] Action Not Allowed';
 }
 
-export class RequestIncreaseAction implements Action {
-  readonly type = CounterActionTypes.REQUEST_INCREASE;
-  
-  public constructor(public payload: IUser) { }
+export interface TryAccessPayload {
+  user: IUser;
+  action: any;
 }
 
-export class RequestDecreaseAction implements Action {
-  readonly type = CounterActionTypes.REQUEST_DECREASE;
+export class TryAccessAction implements Action {
+  readonly type = CounterActionTypes.TRY_ACCESS;
+  public payload: TryAccessPayload;
   
-  public constructor(public payload: IUser) { }
+  public constructor(user: IUser, action: any) {
+    this.payload = {
+      user: user,
+      action: action
+    }
+  }
 }
 
 export class IncreaseAction implements Action {
@@ -31,14 +34,8 @@ export class DecreaseAction implements Action {
   readonly type = CounterActionTypes.DECREASE;
 }
 
-export class IncreaseNotAllowedAction implements Action {
-  readonly type = CounterActionTypes.INCREASE_NOT_ALLOWED;
-  
-  public constructor(public payload: string) { }
-}
-
-export class DecreaseNotAllowedAction implements Action {
-  readonly type = CounterActionTypes.DECREASE_NOT_ALLOWED;
+export class NotAllowedAction implements Action {
+  readonly type = CounterActionTypes.ACTION_NOT_ALLOWED;
   
   public constructor(public payload: string) { }
 }

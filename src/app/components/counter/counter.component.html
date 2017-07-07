@@ -4,10 +4,6 @@
       {{ user.username }}
     </button>
   </div>
-  <div>
-    <p>Can Decrease: <b>{{ _generateAccessStatus(selectedUser.permissions.canDecrease) }}</b></p>
-    <p>Can Increase: <b>{{ _generateAccessStatus(selectedUser.permissions.canIncrease) }}</b></p>
-  </div>
   <div class="counter">
     <button (click)="decreaseCounter(selectedUser)">-</button>
     <span>{{ counter.value }}</span>

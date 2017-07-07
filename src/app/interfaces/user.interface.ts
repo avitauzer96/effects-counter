@@ -1,14 +1,11 @@
-import { IPermissions } from './permissions.interface';
-import {
-  DecreaseAction, DecreaseNotAllowedAction, IncreaseAction,
-  IncreaseNotAllowedAction
-} from '../actions/counter.actions';
+import { IPermission } from './permission.interface';
+import { NotAllowedAction, DecreaseAction, IncreaseAction } from '../actions/counter.actions';
 import { Observable } from 'rxjs/Observable';
 
-type ActionTypes = IncreaseAction | DecreaseAction | IncreaseNotAllowedAction | DecreaseNotAllowedAction;
+type ActionTypes = IncreaseAction | DecreaseAction | NotAllowedAction;
 
 export interface IUser {
   username: string;
-  permissions: IPermissions;
+  permissions: IPermission[];
   checkPermissions?: () => Observable<ActionTypes>;
 }

@@ -3,10 +3,14 @@ import { IUser } from '../../interfaces/user.interface';
 import { USERS } from '../../mock/users.mock';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers/app-state';
-import { RequestDecreaseAction, RequestIncreaseAction } from '../../actions/counter.actions';
-import { IncreasePermission} from '../../decorators/increase-permission.decorator';
-import { DecreasePermission } from '../../decorators/decrease-permission.decorator';
+import {
+  CounterActionTypes,
+  DecreaseAction,
+  IncreaseAction,
+  TryAccessAction
+} from '../../actions/counter.actions';
 import { ICounter } from '../../interfaces/counter.interfacet';
+import { Permission } from '../../decorators/permission.decorator';
 
 @Component({
   selector: 'counter',
@@ -36,14 +40,16 @@ export class CounterComponent implements OnInit {
     this.selectedUser = this.users[index];
   }
   
-  @IncreasePermission
+  @Permission(CounterActionTypes.INCREASE)
   public increaseCounter(user: IUser): void {
-    this._store.dispatch(new RequestIncreaseAction(user));
+    const action: IncreaseAction = new IncreaseAction();
+    this._store.dispatch(new TryAccessAction(user, action));
   }
   
-  @DecreasePermission
+  @Permission(CounterActionTypes.DECREASE)
   public decreaseCounter(user: IUser): void {
-    this._store.dispatch(new RequestDecreaseAction(user));
+    const action: DecreaseAction = new DecreaseAction();
+    this._store.dispatch(new TryAccessAction(user, action));
   }
   
   private _generateAccessStatus(canAccess: boolean): string {

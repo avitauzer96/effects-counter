@@ -8,26 +8,13 @@ const COUNTER_DEFAULT: ICounter = {
 };
 
 export function counterReducer(state: ICounter = COUNTER_DEFAULT, action: Action) {
-  let counter: ICounter;
   switch (action.type) {
-    case CounterActionTypes.REQUEST_INCREASE:
-    case CounterActionTypes.REQUEST_DECREASE:
-      return state;
-    case CounterActionTypes.INCREASE_NOT_ALLOWED:
-    case CounterActionTypes.DECREASE_NOT_ALLOWED:
+    case CounterActionTypes.ACTION_NOT_ALLOWED:
       return Object.assign({}, state, {error: action.payload});
     case CounterActionTypes.INCREASE:
-      counter = {
-        value: ++state.value,
-        error: ''
-      };
-      return Object.assign({}, state, counter);
+      return Object.assign({}, state, {value: ++state.value, error: ''});
     case CounterActionTypes.DECREASE:
-       counter = {
-        value: --state.value,
-        error: ''
-      };
-      return Object.assign({}, state, counter);
+      return Object.assign({}, state, {value: --state.value, error: ''});
     default:
       return state;
   }
