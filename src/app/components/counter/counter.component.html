@@ -1,0 +1,19 @@
+<div *ngIf="users" class="container">
+  <div class="user-switcher">
+    <button *ngFor="let user of users; let index = index" (click)="selectUser(index)" [disabled]="selectedUser === user">
+      {{ user.username }}
+    </button>
+  </div>
+  <div>
+    <p>Can Decrease: <b>{{ _generateAccessStatus(selectedUser.permissions.canDecrease) }}</b></p>
+    <p>Can Increase: <b>{{ _generateAccessStatus(selectedUser.permissions.canIncrease) }}</b></p>
+  </div>
+  <div class="counter">
+    <button (click)="decreaseCounter(selectedUser)">-</button>
+    <span>{{ counter.value }}</span>
+    <button (click)="increaseCounter(selectedUser)">+</button>
+  </div>
+  <div>
+    <span class="error-message" *ngIf="counter.error">{{ counter.error }}</span>
+  </div>
+</div>
