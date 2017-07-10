@@ -39,26 +39,20 @@ var CounterComponent = (function () {
     CounterComponent.prototype.selectUser = function (index) {
         this._store.dispatch(new user_actions_1.SetActiveUserAction(this.users[index]));
     };
-    CounterComponent.prototype.increaseCounter = function (user, store) {
-        var action = new counter_actions_1.IncreaseAction();
-        this._store.dispatch(new counter_actions_1.TryAccessAction(user, action));
-    };
-    CounterComponent.prototype.decreaseCounter = function (user, store) {
-        var action = new counter_actions_1.DecreaseAction();
-        this._store.dispatch(new counter_actions_1.TryAccessAction(user, action));
-    };
+    CounterComponent.prototype.increaseCounter = function (store) { };
+    CounterComponent.prototype.decreaseCounter = function (store) { };
     return CounterComponent;
 }());
 __decorate([
-    permission_decorator_1.Permission(counter_actions_1.CounterActionTypes.INCREASE),
+    permission_decorator_1.Permission(new counter_actions_1.IncreaseAction()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, store_1.Store]),
+    __metadata("design:paramtypes", [store_1.Store]),
     __metadata("design:returntype", void 0)
 ], CounterComponent.prototype, "increaseCounter", null);
 __decorate([
-    permission_decorator_1.Permission(counter_actions_1.CounterActionTypes.DECREASE),
+    permission_decorator_1.Permission(new counter_actions_1.DecreaseAction()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, store_1.Store]),
+    __metadata("design:paramtypes", [store_1.Store]),
     __metadata("design:returntype", void 0)
 ], CounterComponent.prototype, "decreaseCounter", null);
 CounterComponent = __decorate([

@@ -22,7 +22,7 @@ export class TryAccessAction implements Action {
     this.payload = {
       user: user,
       action: action
-    }
+    };
   }
 }
 

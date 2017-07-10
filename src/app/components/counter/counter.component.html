@@ -5,9 +5,9 @@
     </button>
   </div>
   <div class="counter" *ngIf="selectedUser">
-    <button (click)="decreaseCounter(selectedUser, _store)">-</button>
+    <button (click)="decreaseCounter(_store)">-</button>
     <span>{{ counter.value }}</span>
-    <button (click)="increaseCounter(selectedUser, _store)">+</button>
+    <button (click)="increaseCounter(_store)">+</button>
     <div *ngIf="selectedUser.permissions.length">
       <p>List of permissions:</p>
       <ul>

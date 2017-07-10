@@ -10,13 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var effects_1 = require("@ngrx/effects");
+var user_actions_1 = require("../actions/user.actions");
+var fake_api_service_1 = require("../services/fake-api.service");
 var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/switchMap");
 require("rxjs/add/operator/startWith");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
-var user_actions_1 = require("../actions/user.actions");
-var fake_api_service_1 = require("../services/fake-api.service");
 var UserEffects = (function () {
     function UserEffects(actions$, fakeApiService) {
         var _this = this;

@@ -51,15 +51,9 @@ export class CounterComponent implements OnInit {
     this._store.dispatch(new SetActiveUserAction(this.users[index]));
   }
   
-  @Permission(CounterActionTypes.INCREASE)
-  public increaseCounter(user: IUser, store: Store<AppState>): void {
-    const action: IncreaseAction = new IncreaseAction();
-    this._store.dispatch(new TryAccessAction(user, action));
-  }
+  @Permission(new IncreaseAction())
+  public increaseCounter(store: Store<AppState>): void { }
   
-  @Permission(CounterActionTypes.DECREASE)
-  public decreaseCounter(user: IUser, store: Store<AppState>): void {
-    const action: DecreaseAction = new DecreaseAction();
-    this._store.dispatch(new TryAccessAction(user, action));
-  }
+  @Permission(new DecreaseAction())
+  public decreaseCounter(store: Store<AppState>): void { }
 }
