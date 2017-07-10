@@ -4,10 +4,16 @@
       {{ user.username }}
     </button>
   </div>
-  <div class="counter">
-    <button (click)="decreaseCounter(selectedUser)">-</button>
+  <div class="counter" *ngIf="selectedUser">
+    <button (click)="decreaseCounter(selectedUser, _store)">-</button>
     <span>{{ counter.value }}</span>
-    <button (click)="increaseCounter(selectedUser)">+</button>
+    <button (click)="increaseCounter(selectedUser, _store)">+</button>
+    <div *ngIf="selectedUser.permissions.length">
+      <p>List of permissions:</p>
+      <ul>
+        <li *ngFor="let permission of selectedUser.permissions;">{{ permission.type }}</li>
+      </ul>
+    </div>
   </div>
   <div>
     <span class="error-message" *ngIf="counter.error">{{ counter.error }}</span>

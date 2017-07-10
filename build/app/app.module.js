@@ -13,8 +13,14 @@ var effects_1 = require("@ngrx/effects");
 var counter_component_1 = require("./components/counter/counter.component");
 var counter_effects_1 = require("./effects/counter.effects");
 var counter_reducer_1 = require("./reducers/counter.reducer");
+var users_reducer_1 = require("./reducers/users.reducer");
+var active_user_reducer_1 = require("./reducers/active-user.reducer");
+var fake_api_service_1 = require("./services/fake-api.service");
+var user_effects_1 = require("./effects/user.effects");
 var reducers = {
-    counter: counter_reducer_1.counterReducer
+    counter: counter_reducer_1.counterReducer,
+    users: users_reducer_1.userReducer,
+    activeUser: active_user_reducer_1.activeUserReducer
 };
 var AppModule = (function () {
     function AppModule() {
@@ -26,10 +32,12 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             store_1.StoreModule.provideStore(reducers),
-            effects_1.EffectsModule.run(counter_effects_1.CounterEffects)
+            effects_1.EffectsModule.run(counter_effects_1.CounterEffects),
+            effects_1.EffectsModule.run(user_effects_1.UserEffects)
         ],
         declarations: [app_component_1.AppComponent, counter_component_1.CounterComponent],
-        bootstrap: [app_component_1.AppComponent]
+        bootstrap: [app_component_1.AppComponent],
+        providers: [fake_api_service_1.FakeApiService]
     })
 ], AppModule);
 exports.AppModule = AppModule;

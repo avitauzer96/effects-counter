@@ -9,15 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var users_mock_1 = require("../../mock/users.mock");
 var store_1 = require("@ngrx/store");
 var counter_actions_1 = require("../../actions/counter.actions");
 var permission_decorator_1 = require("../../decorators/permission.decorator");
+var user_actions_1 = require("../../actions/user.actions");
 var CounterComponent = (function () {
     function CounterComponent(store) {
-        this.users = users_mock_1.USERS;
+        this.users = [];
         this._store = store;
-        this.selectedUser = this.users[0];
     }
     CounterComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -26,33 +25,40 @@ var CounterComponent = (function () {
             .subscribe(function (counter) {
             _this.counter = counter;
         });
+        this._store
+            .select('users')
+            .subscribe(function (users) {
+            _this.users = users;
+        });
+        this._store
+            .select('activeUser')
+            .subscribe(function (user) {
+            _this.selectedUser = user;
+        });
     };
     CounterComponent.prototype.selectUser = function (index) {
-        this.selectedUser = this.users[index];
+        this._store.dispatch(new user_actions_1.SetActiveUserAction(this.users[index]));
     };
-    CounterComponent.prototype.increaseCounter = function (user) {
+    CounterComponent.prototype.increaseCounter = function (user, store) {
         var action = new counter_actions_1.IncreaseAction();
         this._store.dispatch(new counter_actions_1.TryAccessAction(user, action));
     };
-    CounterComponent.prototype.decreaseCounter = function (user) {
+    CounterComponent.prototype.decreaseCounter = function (user, store) {
         var action = new counter_actions_1.DecreaseAction();
         this._store.dispatch(new counter_actions_1.TryAccessAction(user, action));
-    };
-    CounterComponent.prototype._generateAccessStatus = function (canAccess) {
-        return canAccess ? 'Yes' : 'No';
     };
     return CounterComponent;
 }());
 __decorate([
     permission_decorator_1.Permission(counter_actions_1.CounterActionTypes.INCREASE),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, store_1.Store]),
     __metadata("design:returntype", void 0)
 ], CounterComponent.prototype, "increaseCounter", null);
 __decorate([
     permission_decorator_1.Permission(counter_actions_1.CounterActionTypes.DECREASE),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, store_1.Store]),
     __metadata("design:returntype", void 0)
 ], CounterComponent.prototype, "decreaseCounter", null);
 CounterComponent = __decorate([

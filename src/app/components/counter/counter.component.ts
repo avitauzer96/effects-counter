@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../interfaces/user.interface';
-import { USERS } from '../../mock/users.mock';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers/app-state';
 import {
@@ -11,6 +10,7 @@ import {
 } from '../../actions/counter.actions';
 import { ICounter } from '../../interfaces/counter.interfacet';
 import { Permission } from '../../decorators/permission.decorator';
+import { SetActiveUserAction } from '../../actions/user.actions';
 
 @Component({
   selector: 'counter',
@@ -18,14 +18,13 @@ import { Permission } from '../../decorators/permission.decorator';
   styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
-  public users: IUser[] = USERS;
+  public users: IUser[] = [];
   public selectedUser: IUser;
   public counter: ICounter;
   private _store: Store<AppState>;
   
   public constructor(store: Store<AppState>) {
     this._store = store;
-    this.selectedUser = this.users[0];
   }
   
   public ngOnInit(): void {
@@ -34,27 +33,33 @@ export class CounterComponent implements OnInit {
       .subscribe((counter: ICounter): void => {
         this.counter = counter;
       });
+    
+    this._store
+      .select('users')
+      .subscribe((users: IUser[]): void => {
+        this.users = users;
+      });
+    
+    this._store
+      .select('activeUser')
+      .subscribe((user: IUser): void => {
+        this.selectedUser = user;
+      });
   }
   
   public selectUser(index: number): void {
-    this.selectedUser = this.users[index];
+    this._store.dispatch(new SetActiveUserAction(this.users[index]));
   }
   
   @Permission(CounterActionTypes.INCREASE)
-  public increaseCounter(user: IUser): void {
+  public increaseCounter(user: IUser, store: Store<AppState>): void {
     const action: IncreaseAction = new IncreaseAction();
     this._store.dispatch(new TryAccessAction(user, action));
   }
   
   @Permission(CounterActionTypes.DECREASE)
-  public decreaseCounter(user: IUser): void {
+  public decreaseCounter(user: IUser, store: Store<AppState>): void {
     const action: DecreaseAction = new DecreaseAction();
     this._store.dispatch(new TryAccessAction(user, action));
   }
-  
-  private _generateAccessStatus(canAccess: boolean): string {
-    return canAccess ? 'Yes' : 'No';
-  }
-  
-  
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { CounterActionTypes, IncreaseAction, TryAccessPayload } from '../actions/counter.actions';
-import { IUser } from '../interfaces/user.interface';
+import { CounterActionTypes, TryAccessPayload } from '../actions/counter.actions';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/startWith';
